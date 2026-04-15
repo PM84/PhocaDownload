@@ -167,7 +167,7 @@ class PhocaDownloadRenderFront
 
 		if ($dateExists < $dateNew) {
 			//return '&nbsp;'. JHtml::_('image', 'media/com_phocadownload/images/icon-new.png', JText::_('COM_PHOCADOWNLOAD_NEW'));
-			return '&nbsp;<span class="label label-warning badge bg-warning">'.Text::_('COM_PHOCADOWNLOAD_LABEL_TXT_NEW').'</span>';
+			return '&nbsp;<span class="label label-warning label-new badge bg-warning">'.Text::_('COM_PHOCADOWNLOAD_LABEL_TXT_NEW').'</span>';
 		} else {
 			return '';
 		}
@@ -182,7 +182,7 @@ class PhocaDownloadRenderFront
 
 		if ($requiredHits <= $hits) {
 			//return '&nbsp;'. JHtml::_('image', 'media/com_phocadownload/images/icon-hot.png', JText::_('COM_PHOCADOWNLOAD_HOT'));
-			return '&nbsp;<span class="label label-important label-danger badge bg-danger">'.Text::_('COM_PHOCADOWNLOAD_LABEL_TXT_HOT').'</span>';
+			return '&nbsp;<span class="label label-important label-danger label-hot badge bg-danger">'.Text::_('COM_PHOCADOWNLOAD_LABEL_TXT_HOT').'</span>';
 		} else {
 			return '';
 		}
