@@ -623,6 +623,19 @@
 	<option value="1">COM_PHOCADOWNLOAD_YES</option>
 </field>
 
+<field name="external_url_parser_version" type="list" default="full" label="COM_PHOCADOWNLOAD_FIELD_EXTERNAL_URL_PARSER_VERSION_LABEL" description="COM_PHOCADOWNLOAD_FIELD_EXTERNAL_URL_PARSER_VERSION_DESC">
+	<option value="full">COM_PHOCADOWNLOAD_EXTERNAL_URL_PARSER_VERSION_FULL</option>
+	<option value="minor">COM_PHOCADOWNLOAD_EXTERNAL_URL_PARSER_VERSION_MINOR</option>
+	<option value="major">COM_PHOCADOWNLOAD_EXTERNAL_URL_PARSER_VERSION_MAJOR</option>
+</field>
+
+<field name="external_url_parser_date_offset" type="number" default="0" label="COM_PHOCADOWNLOAD_FIELD_EXTERNAL_URL_PARSER_DATE_OFFSET_LABEL" description="COM_PHOCADOWNLOAD_FIELD_EXTERNAL_URL_PARSER_DATE_OFFSET_DESC" />
+
+<field name="external_url_parser_copy_date_to_publish_up" type="list" default="0" label="COM_PHOCADOWNLOAD_FIELD_EXTERNAL_URL_PARSER_COPY_DATE_TO_PUBLISH_UP_LABEL" description="COM_PHOCADOWNLOAD_FIELD_EXTERNAL_URL_PARSER_COPY_DATE_TO_PUBLISH_UP_DESC">
+	<option value="1">COM_PHOCADOWNLOAD_YES</option>
+	<option value="0">COM_PHOCADOWNLOAD_NO</option>
+</field>
+
 </fieldset>
 
 

@@ -188,9 +188,9 @@ class PhocaDownloadViewFile extends HtmlView
 		// 0 - only menu link
 		// 1 - menu link - category name
 		// 2 - only category name
-
-		$this->_addBreadCrumbs( isset($menu->query['id']) ? $menu->query['id'] : 0, 1, $this->file[0]);
-
+		if (isset($this->file[0])) {
+			$this->_addBreadCrumbs(isset($menu->query['id']) ? $menu->query['id'] : 0, 1, $this->file[0]);
+		}
 
 		parent::display($tpl);
 

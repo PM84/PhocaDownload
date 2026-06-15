@@ -59,7 +59,28 @@ echo $r->startTabs();
 
 echo $r->startTab('general', $tabs['general'], 'active');
 $formArray = array ('catid', 'ordering',
-			'filename', 'filename_play', 'filename_preview', 'image_filename', 'image_filename_spec1', 'image_filename_spec2', 'image_download', 'project_name', 'version', 'author', 'author_url', 'author_email', 'license', 'license_url', 'confirm_license', 'directlink', 'link_external', 'access', 'unaccessible_file', 'userid', 'owner_id');
+			'filename', 'filename_play', 'filename_preview', 'image_filename', 'image_filename_spec1', 'image_filename_spec2', 'image_download', 'project_name', 'version', 'author', 'author_url', 'author_email', 'license', 'license_url', 'confirm_license', 'directlink');
+echo $r->group($this->form, $formArray);
+
+$description = Text::_($this->form->getFieldAttribute('link_external', 'description'));
+$descriptionOutput = '';
+if ($description != '') {
+	$descriptionOutput = '<div role="tooltip">'.$description.'</div>';
+}
+
+echo '<div class="control-group ph-par-link_external">'."\n"
+	. '<div class="control-label">'. $this->form->getLabel('link_external') . $descriptionOutput . '</div>'
+	. '<div class="controls">'
+	. '<div class="input-group">'
+	. $this->form->getInput('link_external')
+	. '<button type="button" class="btn btn-primary" id="phocadownload-external-url-parse">'
+	. Text::_('COM_PHOCADOWNLOAD_PARSE')
+	. '</button>'
+	. '</div>'
+	. '</div>'."\n"
+	. '</div>' . "\n";
+
+$formArray = array ('access', 'unaccessible_file', 'userid', 'owner_id');
 echo $r->group($this->form, $formArray);
 $formArray = array('description', 'features', 'changelog', 'notes' );
 echo $r->group($this->form, $formArray, 1);

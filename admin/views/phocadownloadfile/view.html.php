@@ -9,6 +9,7 @@
 defined('_JEXEC') or die();
 use Joomla\CMS\MVC\View\HtmlView;
 use Joomla\CMS\Factory;
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Toolbar\Toolbar;
 use Joomla\CMS\Language\Text;
 use Joomla\CMS\Toolbar\ToolbarHelper;
@@ -29,6 +30,24 @@ class PhocaDownloadCpViewPhocaDownloadFile extends HtmlView
 		$this->state	= $this->get('State');
 		$this->form		= $this->get('Form');
 		$this->item		= $this->get('Item');
+
+		$params = ComponentHelper::getParams('com_phocadownload');
+		$document = Factory::getApplication()->getDocument();
+		$document->addScriptOptions(
+			'com_phocadownload.externalUrlParser',
+			array(
+				'versionFormat' => $params->get('external_url_parser_version', 'full'),
+				'dateOffsetHours' => (int) $params->get('external_url_parser_date_offset', 0),
+				'copyDateToPublishUp' => (int) $params->get('external_url_parser_copy_date_to_publish_up', 0),
+			)
+		);
+
+		Text::script('COM_PHOCADOWNLOAD_EXTERNAL_URL_PARSE_ERROR');
+		Text::script('COM_PHOCADOWNLOAD_EXTERNAL_URL_PARSE_URL_EMPTY');
+		Text::script('COM_PHOCADOWNLOAD_EXTERNAL_URL_PARSE_URL_INVALID');
+
+		$document->getWebAssetManager()
+			->registerAndUseScript('com_phocadownload.external-url-parser', 'media/com_phocadownload/js/external-url-parser.js', array('version' => 'auto'), array('defer' => true));
 
 
 		if (isset($this->item->textonly) && (int)$this->item->textonly == 1 && Factory::getApplication()->getInput()->get('layout') != 'edit_text') {
