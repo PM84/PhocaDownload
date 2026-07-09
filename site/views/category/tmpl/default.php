@@ -18,6 +18,11 @@ echo '<div id="phoca-dl-category-box" class="pd-category-view'.$this->t['p']->ge
 //	echo '<h1>'. $this->escape($this->t['p']->get('page_heading')) . '</h1>';
 //}
 echo PhocaDownloadRenderFront::renderHeader(array());
+
+if ($this->t['description'] != '' && in_array(2, $this->t['display_main_description'])) {
+    echo '<div class="pd-desc">' . $this->t['description'] . '</div>';
+}
+
 // Search by tags - the category rights must be checked for every file
 $this->checkRights = 1;
 // -------------------------------------------------------------------

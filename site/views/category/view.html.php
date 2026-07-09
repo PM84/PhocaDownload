@@ -61,6 +61,9 @@ class PhocaDownloadViewCategory extends HtmlView
 			$this->t['limitstarturl'] = '';
 		}
 
+		$this->t['description']				= $this->t['p']->get( 'description', '' );
+		$this->t['display_main_description'] = (array)$this->t['p']->get('display_main_description', [1]);
+
 		$this->t['download_external_link'] = $this->t['p']->get( 'download_external_link', '_self' );
 		$this->t['filename_or_name'] 		= $this->t['p']->get( 'filename_or_name', 'filenametitle' );
 		$this->t['display_downloads'] 		= $this->t['p']->get( 'display_downloads', 0 );

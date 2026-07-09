@@ -77,6 +77,8 @@ class PhocaDownloadViewFile extends HtmlView
 
 
 		// Params
+		$this->t['description']				= $this->t['p']->get( 'description', '' );
+		$this->t['display_main_description'] = (array)$this->t['p']->get('display_main_description', [1]);
 		$this->t['licenseboxheight']		= $this->t['p']->get( 'license_box_height', 300 );
 		$this->t['filename_or_name'] 		= $this->t['p']->get( 'filename_or_name', 'filename' );
 		$this->t['display_up_icon'] 		= $this->t['p']->get( 'display_up_icon', 1 );

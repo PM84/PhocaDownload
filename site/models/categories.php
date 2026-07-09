@@ -36,8 +36,6 @@ class PhocaDownloadModelCategories extends BaseDatabaseModel
 			//$this->_categories 	= $this->_getList( $query );
 			$categories 	= $this->_getList( $query );
 
-			bdump($categories);
-
 			if (!empty($categories)) {
 
 				// Parent Only

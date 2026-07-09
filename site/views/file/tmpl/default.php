@@ -21,6 +21,10 @@ echo '<div id="phoca-dl-file-box" class="pd-file-view'.$this->t['p']->get( 'page
 //}
 echo PhocaDownloadRenderFront::renderHeader(array());
 
+if ($this->t['description'] != '' && in_array(3, $this->t['display_main_description'])) {
+    echo '<div class="pd-desc">' . $this->t['description'] . '</div>';
+}
+
 if (!empty($this->category[0])) {
 	echo '<div class="pd-file">';
 	if ($this->t['display_up_icon'] == 1 && $this->t['tmplr'] == 0) {

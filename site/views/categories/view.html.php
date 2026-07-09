@@ -39,6 +39,7 @@ class PhocaDownloadViewCategories extends HtmlView
 		$this->t['download_metakey'] 		= $this->t['p']->get( 'download_metakey', '' );
 		$this->t['download_metadesc'] 		= $this->t['p']->get( 'download_metadesc', '' );
 		$this->t['description']				= $this->t['p']->get( 'description', '' );
+		$this->t['display_main_description'] = (array)$this->t['p']->get('display_main_description', [1]);
 		$this->t['displaymaincatdesc']		= $this->t['p']->get( 'display_main_cat_desc', 0 );
 		$this->t['display_specific_layout']	= $this->t['p']->get( 'display_specific_layout', 0 );
 		$this->t['display_main_cat_subcategories']	= (int)$this->t['p']->get( 'display_main_cat_subcategories', 1 );

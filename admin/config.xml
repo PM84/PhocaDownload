@@ -588,6 +588,17 @@
 
 <field name="description" default="" type="editor" class="form-control" label="COM_PHOCADOWNLOAD_FIELD_DESCRIPTION_LABEL" description="COM_PHOCADOWNLOAD_FIELD_DESCRIPTION_DESC" filter="\Joomla\CMS\Component\ComponentHelper::filterText" />
 
+<field
+    name="display_main_description"
+    type="list"
+    label="COM_PHOCADOWNLOAD_FIELD_DISPLAY_MAIN_DESCRIPTION_LABEL"
+    description="COM_PHOCADOWNLOAD_FIELD_DISPLAY_MAIN_DESCRIPTION_DESC"
+    multiple="true"
+    default="1">
+    <option value="1">COM_PHOCADOWNLOAD_FIELD_VALUE_CATEGORIES_VIEW</option>
+    <option value="2">COM_PHOCADOWNLOAD_FIELD_VALUE_CATEGORY_VIEW</option>
+    <option value="3">COM_PHOCADOWNLOAD_FIELD_VALUE_FILE_VIEW</option>
+</field>
 
 <field name="registered_access_level" type="phocaaccesslevel" label="COM_PHOCADOWNLOAD_FIELD_REGISTERED_ACCESS_LEVEL_LABEL" description="COM_PHOCADOWNLOAD_FIELD_REGISTERED_ACCESS_LEVEL_DESC" multiple="true" size="10" layout="joomla.form.field.list-fancy-select" >
 

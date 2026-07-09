@@ -19,8 +19,8 @@ echo '<div id="phoca-dl-categories-box" class="pd-categories-view'.$this->t['p']
 //}
 echo PhocaDownloadRenderFront::renderHeader(array());
 
-if ( $this->t['description'] != '') {
-	echo '<div class="pd-desc">'. $this->t['description']. '</div>';
+if ($this->t['description'] != '' && in_array(1, $this->t['display_main_description'])) {
+    echo '<div class="pd-desc">' . $this->t['description'] . '</div>';
 }
 
 
