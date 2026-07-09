@@ -123,7 +123,7 @@ class PhocaDownloadRenderAdminViews extends AdminViews
 		return '<div class="btn-group pull-right ph-select-status">'. "\n"
 		.'<select name="filter_published" class="form-control" onchange="this.form.submit()">'."\n"
 		. '<option value="">'.Text::_($txtSp).'</option>'
-		. HTMLHelper::_('select.options', HTMLHelper::_('jgrid.publishedOptions', array('archived' => 0, 'trash' => 0)), 'value', 'text', $state, true)
+		. HTMLHelper::_('select.options', HTMLHelper::_('jgrid.publishedOptions', array('archived' => 1, 'trash' => 0)), 'value', 'text', $state, true)
 		.'</select></div>'. "\n";
 	}
 

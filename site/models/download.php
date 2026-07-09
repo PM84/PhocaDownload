@@ -70,8 +70,9 @@ class PhocaDownloadModelDownload extends BaseDatabaseModel
 			// END GWE MOD
 		}
 		
-		$query = ' SELECT c.*, lc.title AS licensetitle, lc.description AS licensetext, lc.id AS licenseid'
-				.' FROM #__phocadownload AS c' 
+		$query = ' SELECT c.*, cc.published AS categorypublished, lc.title AS licensetitle, lc.description AS licensetext, lc.id AS licenseid'
+				.' FROM #__phocadownload AS c'
+				.' LEFT JOIN #__phocadownload_categories AS cc ON cc.id = c.catid'
 				.' LEFT JOIN #__phocadownload_licenses AS lc ON lc.id = c.confirm_license'
 				. ($pQ == 1 ? ((count($joins)>0?( " LEFT JOIN " .implode( " LEFT JOIN ", $joins )):"")):"") // GWE MOD
 				.' WHERE ' . implode( ' AND ', $wheres )

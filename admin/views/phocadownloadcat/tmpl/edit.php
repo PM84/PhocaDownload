@@ -41,12 +41,12 @@ echo $r->startTabs();
 echo $r->startTab('general', $tabs['general'], 'active');
 $formArray = array ( 'parent_id', 'image', 'project_name', 'ordering', 'access', 'accessuserid', 'uploaduserid', 'deleteuserid');
 echo $r->group($this->form, $formArray);
-$formArray = array('description');
+$formArray = array('description', "archived_description");
 echo $r->group($this->form, $formArray, 1);
 echo $r->endTab();
 
 echo $r->startTab('publishing', $tabs['publishing']);
-foreach($this->form->getFieldset('publish') as $field) {
+/*foreach($this->form->getFieldset('publish') as $field) {
 	echo '<div class="control-group">';
 	if (!$field->hidden) {
 		echo '<div class="control-label">'.$field->label.'</div>';
@@ -54,7 +54,24 @@ foreach($this->form->getFieldset('publish') as $field) {
 	echo '<div class="controls">';
 	echo $field->input;
 	echo '</div></div>';
+}*/
+foreach($this->form->getFieldset('publish') as $field) {
+
+	$description = Text::_($field->description);
+    $descriptionOutput = '';
+    if ($description != '') {
+        $descriptionOutput = '<div role="tooltip">'.$description.'</div>';
+    }
+
+	echo '<div class="control-group">';
+	if (!$field->hidden) {
+		echo '<div class="control-label">'.$field->label. $descriptionOutput .'</div>';
+	}
+	echo '<div class="controls">';
+	echo $field->input;
+	echo '</div></div>';
 }
+
 echo $r->endTab();
 
 echo $r->startTab('metadata', $tabs['metadata']);

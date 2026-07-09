@@ -40,6 +40,12 @@ if (!empty($this->files)) {
 		}
 
 		if ($rightDisplay == 1) {
+			$categoryArchived = 0;
+			if (isset($this->category[0]->published) && (int)$this->category[0]->published == 2) {
+				$categoryArchived = 1;
+			} else if (isset($v->categorypublished) && (int)$v->categorypublished == 2) {
+				$categoryArchived = 1;
+			}
 
 
 
@@ -65,7 +71,10 @@ if (!empty($this->files)) {
 			// General
 			$linkDownloadB = '';
 			$linkDownloadE = '';
-			if ((int)$v->confirm_license > 0 || $this->t['display_file_view'] == 1) {
+			if ($categoryArchived == 1) {
+				$linkDownloadB = '';
+				$linkDownloadE = '';
+			} else if ((int)$v->confirm_license > 0 || $this->t['display_file_view'] == 1) {
 				$linkDownloadB = '<a class="" href="'. Route::_(PhocaDownloadRoute::getFileRoute($v->id, $v->catid,$v->alias, $v->categoryalias, $v->sectionid). $this->t['limitstarturl']).'" >';	// we need pagination to go back
 				$linkDownloadE ='</a>';
 			} else {
@@ -213,7 +222,10 @@ if (!empty($this->files)) {
 
 			// pdbuttondownload
 			//$pdButtonDownload = '<div class="pd-button-download">';
-			$pdButtonDownload = str_replace('class=""', 'class="btn btn-success"', $linkDownloadB) . Text::_('COM_PHOCADOWNLOAD_DOWNLOAD') .$linkDownloadE;
+			$pdButtonDownload = '';
+			if ($categoryArchived == 0) {
+				$pdButtonDownload = str_replace('class=""', 'class="btn btn-success"', $linkDownloadB) . Text::_('COM_PHOCADOWNLOAD_DOWNLOAD') .$linkDownloadE;
+			}
 			//$pdButtonDownload .= '</div>';
 
 
@@ -433,7 +445,10 @@ if (!empty($this->files)) {
 
 			/// pdmirrorlink1
 			$pdMirrorLink1 = '';
-			$mirrorOutput1 = PhocaDownloadRenderFront::displayMirrorLinks(1, $v->mirror1link, $v->mirror1title, $v->mirror1target);
+			$mirrorOutput1 = '';
+			if ($categoryArchived == 0) {
+				$mirrorOutput1 = PhocaDownloadRenderFront::displayMirrorLinks(1, $v->mirror1link, $v->mirror1title, $v->mirror1target);
+			}
 
 			if ($mirrorOutput1 != '') {
 
@@ -449,7 +464,10 @@ if (!empty($this->files)) {
 
 			/// pdmirrorlink2
 			$pdMirrorLink2 = '';
-			$mirrorOutput2 = PhocaDownloadRenderFront::displayMirrorLinks(1, $v->mirror2link, $v->mirror2title, $v->mirror2target);
+			$mirrorOutput2 = '';
+			if ($categoryArchived == 0) {
+				$mirrorOutput2 = PhocaDownloadRenderFront::displayMirrorLinks(1, $v->mirror2link, $v->mirror2title, $v->mirror2target);
+			}
 			if ($mirrorOutput2 != '') {
 				if ($this->t['display_mirror_links'] == 4 || $this->t['display_mirror_links'] == 6) {
 					$classMirror = '';//'pd-button-mirror2';

@@ -47,6 +47,7 @@ if (!empty($this->category[0])) {
 
 if (!empty($this->file[0])) {
 	$v = $this->file[0];
+	$categoryArchived = (isset($v->categorypublished) && (int)$v->categorypublished == 2) ? 1 : 0;
 
 	// USER RIGHT - Access of categories (if file is included in some not accessed category) - - - - -
 	// ACCESS is handled in SQL query, ACCESS USER ID is handled here (specific users)
@@ -242,7 +243,10 @@ if (!empty($this->file[0])) {
 
 			/// pdmirrorlink1
 			$pdMirrorLink1 = '';
-			$mirrorOutput1 = PhocaDownloadRenderFront::displayMirrorLinks(1, $v->mirror1link, $v->mirror1title, $v->mirror1target);
+			$mirrorOutput1 = '';
+			if ($categoryArchived == 0) {
+				$mirrorOutput1 = PhocaDownloadRenderFront::displayMirrorLinks(1, $v->mirror1link, $v->mirror1title, $v->mirror1target);
+			}
 
 			if ($mirrorOutput1 != '') {
 
@@ -258,7 +262,10 @@ if (!empty($this->file[0])) {
 
 			/// pdmirrorlink2
 			$pdMirrorLink2 = '';
-			$mirrorOutput2 = PhocaDownloadRenderFront::displayMirrorLinks(1, $v->mirror2link, $v->mirror2title, $v->mirror2target);
+			$mirrorOutput2 = '';
+			if ($categoryArchived == 0) {
+				$mirrorOutput2 = PhocaDownloadRenderFront::displayMirrorLinks(1, $v->mirror2link, $v->mirror2title, $v->mirror2target);
+			}
 			if ($mirrorOutput2 != '') {
 				if ($this->t['display_mirror_links'] == 4 || $this->t['display_mirror_links'] == 6) {
 					$classMirror = 'pd-button-mirror2';
@@ -338,7 +345,9 @@ if (!empty($this->file[0])) {
 
 		///	$o = '<div class="pd-cb">&nbsp;</div>';
 			$o = '';
-			if ((int)$v->confirm_license > 0) {
+			if ($categoryArchived == 1) {
+				$o = '';
+			} else if ((int)$v->confirm_license > 0) {
 				$o .= '<h4 class="pdfv-confirm-lic-text">'.Text::_('COM_PHOCADOWNLOAD_LICENSE_AGREEMENT').'</h4>';
 				$o .= '<div id="phoca-dl-license" style="height:'.(int)$this->t['licenseboxheight'].'px">'.$v->licensetext.'</div>';
 

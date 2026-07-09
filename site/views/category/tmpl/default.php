@@ -81,6 +81,13 @@ if ((int)$this->t['tagid'] > 0) {
 			}*/
 
 			// Description
+			if ((int)$this->category[0]->published == 2 && $l->isValueEditor($this->category[0]->archived_description)) {
+				echo '<div class="pd-cdesc">';
+				echo HTMLHelper::_('content.prepare', $this->category[0]->archived_description);
+				echo '</div>';
+			}
+
+			// Description
 			 if ($l->isValueEditor($this->category[0]->description)) {
 				echo '<div class="pd-cdesc">';
 				echo HTMLHelper::_('content.prepare', $this->category[0]->description);

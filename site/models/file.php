@@ -90,7 +90,7 @@ class PhocaDownloadModelFile extends BaseDatabaseModel
 		$wheres[] = '( (unaccessible_file = 1 ) OR (unaccessible_file = 0 AND cc.access IN ('.$userLevels.') ) )';
 		$wheres[] = " c.published = 1";
 		$wheres[] = " c.approved = 1";
-		$wheres[] = " cc.published = 1";
+		$wheres[] = " cc.published IN (1,2)";
 		$wheres[] = " c.id = " . (int) $fileId;
 
 		if ($this->getState('filter.language')) {
@@ -114,7 +114,7 @@ class PhocaDownloadModelFile extends BaseDatabaseModel
 			// END GWE MOD
 		}
 
-		$query = ' SELECT c.*, cc.id AS categoryid, cc.title AS categorytitle, cc.alias AS categoryalias, cc.access as cataccess, cc.accessuserid as cataccessuserid, lc.title AS licensetitle, lc.description AS licensetext, lc.id AS licenseid'
+		$query = ' SELECT c.*, cc.id AS categoryid, cc.title AS categorytitle, cc.alias AS categoryalias, cc.published AS categorypublished, cc.access as cataccess, cc.accessuserid as cataccessuserid, lc.title AS licensetitle, lc.description AS licensetext, lc.id AS licenseid'
 				.' FROM #__phocadownload AS c'
 				.' LEFT JOIN #__phocadownload_categories AS cc ON cc.id = c.catid'
 				.' LEFT JOIN #__phocadownload_licenses AS lc ON lc.id = c.confirm_license'
@@ -146,7 +146,7 @@ class PhocaDownloadModelFile extends BaseDatabaseModel
 
 		$wheres[]	= " c.id= ".(int)$fileId;
 		$wheres[] = " cc.access IN (".$userLevels.")";
-		$wheres[] = " cc.published = 1";
+		$wheres[] = " cc.published IN (1,2)";
 
 		if ($this->getState('filter.language')) {
 			$wheres[] =  ' c.language IN ('.$this->_db->Quote(Factory::getLanguage()->getTag()).','.$this->_db->Quote('*').')';
@@ -162,7 +162,7 @@ class PhocaDownloadModelFile extends BaseDatabaseModel
 			// END GWE MOD
 		}
 
-		$query = " SELECT cc.id, cc.title, cc.alias, cc.description, cc.access as cataccess, cc.accessuserid as cataccessuserid, cc.parent_id as parent_id"
+		$query = " SELECT cc.id, cc.title, cc.alias, cc.published, cc.description, cc.archived_description, cc.access as cataccess, cc.accessuserid as cataccessuserid, cc.parent_id as parent_id"
 				. " FROM #__phocadownload_categories AS cc"
 				. " LEFT JOIN #__phocadownload AS c ON c.catid = cc.id"
 				. ($pQ == 1 ? ((count($joins)>0?( " LEFT JOIN " .implode( " LEFT JOIN ", $joins )):"")):"") // GWE MOD

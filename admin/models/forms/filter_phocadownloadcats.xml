@@ -10,6 +10,7 @@
 		<option value="">JOPTION_SELECT_PUBLISHED</option>
 		<option value="1">COM_PHOCADOWNLOAD_PUBLISHED</option>
 		<option value="0">COM_PHOCADOWNLOAD_UNPUBLISHED</option>
+		<option value="2">JARCHIVED</option>
 		</field>
 		
 		<field name="level" type="list" label="JOPTION_FILTER_PUBLISHED" description="JOPTION_FILTER_PUBLISHED_DESC" onchange="this.form.submit();" >

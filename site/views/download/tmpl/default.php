@@ -77,8 +77,11 @@ if ($this->t['found'] == 1) {
 		}
 		echo '<div class="pd-downloadbox-direct">'
 		.$pdFile
-		.'<div style="clear:both"></div>'
-		.'<div class="pd-center pd-download-direct"><a class="btn btn-success btn-large" href="'.Route::_($downloadLink).'">'.Text::_('COM_PHOCADOWNLOAD_DOWNLOAD_FILE').'</a></div></div>';
+		.'<div style="clear:both"></div>';
+		if (!isset($v->categorypublished) || (int)$v->categorypublished != 2) {
+			echo '<div class="pd-center pd-download-direct"><a class="btn btn-success btn-large" href="'.Route::_($downloadLink).'">'.Text::_('COM_PHOCADOWNLOAD_DOWNLOAD_FILE').'</a></div>';
+		}
+		echo '</div>';
 
 	}
 } else {

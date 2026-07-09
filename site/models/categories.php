@@ -36,6 +36,8 @@ class PhocaDownloadModelCategories extends BaseDatabaseModel
 			//$this->_categories 	= $this->_getList( $query );
 			$categories 	= $this->_getList( $query );
 
+			bdump($categories);
+
 			if (!empty($categories)) {
 
 				// Parent Only
@@ -93,7 +95,7 @@ class PhocaDownloadModelCategories extends BaseDatabaseModel
 			$wheres[] = " cc.id NOT IN (".$hide_categories.")";
 		}
 		//$wheres[] = " cc.parent_id = 0";
-		$wheres[] = " cc.published = 1";
+		$wheres[] = " cc.published IN (1,2)";
 		$wheres[] = " cc.access IN (".$userLevels.")";
 
 		if ($this->getState('filter.language')) {
@@ -113,12 +115,11 @@ class PhocaDownloadModelCategories extends BaseDatabaseModel
 
 		$query =  " SELECT cc.id, cc.parent_id, cc.title, cc.alias, cc.image, cc.access, cc.description, cc.accessuserid, COUNT(c.id) AS numdoc, 0 AS numsubcat"
 				. " FROM #__phocadownload_categories AS cc"
-				. " LEFT JOIN #__phocadownload AS c ON c.catid = cc.id AND c.published = 1  AND c.textonly = 0"
+				. " LEFT JOIN #__phocadownload AS c ON c.catid = cc.id AND c.published = 1 AND c.textonly = 0"
 				. ($pQ == 1 ? ((count($joins)>0?( " LEFT JOIN " .implode( " LEFT JOIN ", $joins )):"")):"") // GWE MOD
 				. " WHERE " . implode( " AND ", $wheres )
 				. " GROUP BY cc.id, cc.parent_id, cc.title, cc.image, cc.alias, cc.access, cc.description, cc.accessuserid"
 				. " ORDER BY ".$categoriesOrdering;
-
 		return $query;
 	}
 
@@ -146,7 +147,7 @@ class PhocaDownloadModelCategories extends BaseDatabaseModel
 			$wheres[] = " cc.id NOT IN (".$hide_categories.")";
 		}
 		$wheres[] = " cc.parent_id = ".(int)$parentCatId;
-		$wheres[] = " cc.published = 1";
+		$wheres[] = " cc.published IN (1,2)";
 		$wheres[] = " cc.access IN (".$userLevels.")";
 
 		if ($this->getState('filter.language')) {
@@ -166,7 +167,7 @@ class PhocaDownloadModelCategories extends BaseDatabaseModel
 
 		$query = " SELECT  cc.id, cc.title, cc.alias, cc.image, cc.access, cc.accessuserid, COUNT(c.id) AS numdoc"
 				. " FROM #__phocadownload_categories AS cc"
-				. " LEFT JOIN #__phocadownload AS c ON c.catid = cc.id AND c.published = 1  AND c.textonly = 0"
+				. " LEFT JOIN #__phocadownload AS c ON c.catid = cc.id AND c.published = 1 AND c.textonly = 0"
 				. ($pQ == 1 ? ((count($joins)>0?( " LEFT JOIN " .implode( " LEFT JOIN ", $joins )):"")):"") // GWE MOD
 				. " WHERE " . implode( " AND ", $wheres )
 				. " GROUP BY cc.id, cc.title, cc.alias, cc.image, cc.access, cc.accessuserid"

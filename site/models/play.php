@@ -86,7 +86,7 @@ class PhocaDownloadModelPlay extends BaseDatabaseModel
 		}*/
 		$wheres[] = " c.published = 1";
 		$wheres[] = " c.approved = 1";
-		$wheres[] = " cc.published = 1";
+		$wheres[] 	= " cc.published IN (1,2)";
 		
 		$wheres[] = " c.id = " . (int) $fileId;
 		
@@ -145,7 +145,7 @@ class PhocaDownloadModelPlay extends BaseDatabaseModel
 		
 		$wheres[]	= " c.id= ".(int)$fileId;
 		$wheres[] 	= " cc.access IN (".$userLevels.")";
-		$wheres[] 	= " cc.published = 1";
+		$wheres[] 	= " cc.published IN (1,2)";
 		
 		if ($this->getState('filter.language')) {
 			$wheres[] =  ' c.language IN ('.$this->_db->Quote(Factory::getLanguage()->getTag()).','.$this->_db->Quote('*').')';

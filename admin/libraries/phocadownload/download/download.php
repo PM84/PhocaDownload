@@ -423,7 +423,7 @@ class PhocaDownloadDownload
 				. " ORDER BY c.ordering";*/
 
 
-		$query = ' SELECT c.id, c.catid, c.filename, c.directlink, c.link_external, c.access, c.confirm_license, c.metakey, c.metadesc, cc.access as cataccess, cc.accessuserid as cataccessuserid, c.tokenhits '
+		$query = ' SELECT c.id, c.catid, c.filename, c.directlink, c.link_external, c.access, c.confirm_license, c.metakey, c.metadesc, cc.published AS categorypublished, cc.access as cataccess, cc.accessuserid as cataccessuserid, c.tokenhits '
 				.' FROM #__phocadownload AS c, #__phocadownload_categories AS cc '
 				. ($pQ == 1 ? ((count($joins)>0?( ' LEFT JOIN ' .implode( ' LEFT JOIN ', $joins )):'')):'') // GWE MOD
 				. ' WHERE ' . implode( ' AND ', $wheres )
@@ -486,6 +486,12 @@ class PhocaDownloadDownload
 			$outcome['directlink']		= 0;
 			$outcome['externallink']	= 0;
 			return $outcome;
+		}
+
+		if (isset($filename[0]->categorypublished) && (int)$filename[0]->categorypublished == 2) {
+			$app->enqueueMessage(Text::_('COM_PHOCADOWNLOAD_ERROR_CATEGORY_ARCHIVED'), 'error');
+			$app->redirect(Route::_(htmlspecialchars($return)));
+			exit;
 		}
 
 		if ($type == 1) {

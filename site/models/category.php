@@ -123,7 +123,7 @@ class PhocaDownloadModelCategory extends BaseDatabaseModel
 
 		$wheres[] = ' c.published = 1';
 		$wheres[] = ' c.approved = 1';
-		$wheres[] = ' cc.published = 1';
+		$wheres[] = ' cc.published IN (1,2)';
 
 		if ($this->getState('filter.language')) {
 			$wheres[] =  ' c.language IN ('.$this->_db->Quote(Factory::getLanguage()->getTag()).','.$this->_db->Quote('*').')';
@@ -164,7 +164,7 @@ class PhocaDownloadModelCategory extends BaseDatabaseModel
 
 		} else {
 
-			$query = ' SELECT c.*, cc.id AS categoryid, cc.title AS categorytitle, cc.alias AS categoryalias, cc.access as cataccess, cc.accessuserid as cataccessuserid '
+			$query = ' SELECT c.*, cc.id AS categoryid, cc.title AS categorytitle, cc.alias AS categoryalias, cc.published AS categorypublished, cc.access as cataccess, cc.accessuserid as cataccessuserid '
 					.' FROM #__phocadownload AS c'
 					.' LEFT JOIN #__phocadownload_categories AS cc ON cc.id = c.catid';
 			if ((int)$tagId > 0) {
@@ -205,7 +205,7 @@ class PhocaDownloadModelCategory extends BaseDatabaseModel
 		}
 
 		$wheres[] = " cc.access IN (".$userLevels.")";
-		$wheres[] = " cc.published = 1";
+		$wheres[] = " cc.published IN (1,2)";
 
 		if ($this->getState('filter.language')) {
 			$wheres[] =  ' cc.language IN ('.$this->_db->Quote(Factory::getLanguage()->getTag()).','.$this->_db->Quote('*').')';
@@ -222,15 +222,15 @@ class PhocaDownloadModelCategory extends BaseDatabaseModel
 		}
 
 		if ($subcategories) {
-			$query = " SELECT  cc.id, cc.title, cc.alias, cc.access as cataccess, cc.accessuserid as cataccessuserid, COUNT(c.id) AS numdoc"
+			$query = " SELECT  cc.id, cc.title, cc.alias, cc.published, cc.access as cataccess, cc.accessuserid as cataccessuserid, COUNT(c.id) AS numdoc"
 				. " FROM #__phocadownload_categories AS cc"
 				. " LEFT JOIN #__phocadownload AS c ON c.catid = cc.id AND c.published = 1 AND c.textonly = 0"
 				. ($pQ == 1 ? ((count($joins)>0?( " LEFT JOIN " .implode( " LEFT JOIN ", $joins )):"")):"") // GWE MOD
 				. " WHERE " . implode( " AND ", $wheres )
-				. " GROUP BY cc.id, cc.title, cc.alias, cc.access, cc.accessuserid"
+				. " GROUP BY cc.id, cc.title, cc.alias, cc.published, cc.access, cc.accessuserid"
 				. " ORDER BY ".$categoryOrdering;
 		} else {
-			$query = " SELECT cc.id, cc.title, cc.alias, cc.access as cataccess, cc.accessuserid as cataccessuserid, cc.description, cc.metakey, cc.metadesc, pc.title as parenttitle, cc.parent_id as parent_id, pc.alias as parentalias"
+			$query = " SELECT cc.id, cc.title, cc.alias, cc.published, cc.access as cataccess, cc.accessuserid as cataccessuserid, cc.description, cc.archived_description, cc.metakey, cc.metadesc, pc.title as parenttitle, cc.parent_id as parent_id, pc.alias as parentalias"
 				. " FROM #__phocadownload_categories AS cc"
 				. " LEFT JOIN #__phocadownload_categories AS pc ON pc.id = cc.parent_id"
 				. ($pQ == 1 ? ((count($joins)>0?( " LEFT JOIN " .implode( " LEFT JOIN ", $joins )):"")):"") // GWE MOD

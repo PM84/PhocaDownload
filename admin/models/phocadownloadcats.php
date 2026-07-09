@@ -213,7 +213,7 @@ class PhocaDownloadCpModelPhocaDownloadCats extends ListModel
 			$query->where('a.published = '.(int) $published);
 		}
 		else if ($published === '') {
-			$query->where('(a.published IN (0, 1))');
+			$query->where('(a.published IN (0, 1, 2))');
 		}
 
 		// Filter by category.
