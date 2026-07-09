@@ -69,7 +69,7 @@
 		<downloads>
 			<downloadurl type="full" format="zip">https://github.com/PhocaCz/PhocaDownload/releases/download/6.1.2/com_phocadownload_v6.1.2.zip</downloadurl>
 		</downloads>
-		<sha512>477d7d14458b358f81714acc909820874e8b1e4ba67102da544ea217b20315f371d9828786a8a1f05ee8f7aeee57d50b8cc23ca7e5ac576b5e529865723b0770</sha512>
+		<sha512>cc50a7ab6b753443f450baadb556629de622e1d7ae8a47f06608721025f3cdf6f05ff1aeb70f60663b7227c52e746e5bdce96352d35fe2af4219d14341c2374d</sha512>
 		<tags>
 			<tag>stable</tag>
 		</tags>
