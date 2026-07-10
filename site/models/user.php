@@ -311,7 +311,7 @@ class PhocaDownloadModelUser extends BaseDatabaseModel
 					$fileExists = 1;
 				}
 
-				if (!File::upload($file['tmp_name'], $filepath, false, true)) {
+				if (!File::upload($file['tmp_name'], $filepath, false)) {
 					$errUploadMsg = Text::_("COM_PHOCADOWNLOAD_UNABLE_TO_UPLOAD_FILE");
 					return false;
 				} else {

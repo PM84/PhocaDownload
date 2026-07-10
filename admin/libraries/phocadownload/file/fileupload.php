@@ -311,7 +311,7 @@ class PhocaDownloadFileUpload
 				}
 
 
-				if(!File::upload($file['tmp_name'], $filepathImgFinal, false, true)) {
+				if(!File::upload($file['tmp_name'], $filepathImgFinal, false)) {
 
 					jexit(json_encode(array( 'jsonrpc' => '2.0', 'result' => 'error', 'code' => 109,
 					'message' => Text::_('COM_PHOCADOWNLOAD_ERROR').': ',
@@ -432,7 +432,7 @@ class PhocaDownloadFileUpload
 				}
 			}
 
-			if (!File::upload($file['tmp_name'], $filepath, false, true)) {
+			if (!File::upload($file['tmp_name'], $filepath, false)) {
 				if ($return) {
 
 					$app->enqueueMessage( Text::_('COM_PHOCADOWNLOAD_ERROR_UNABLE_TO_UPLOAD_FILE'), 'error');
