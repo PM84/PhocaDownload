@@ -89,7 +89,7 @@ If you need additional information beyond this GitHub repository, further docume
 ### Version (Joomla! 5.x - no longer supported)
 5.1.3
 ### Version (Joomla! 6.x)
-6.1.2
+6.1.3
 
 ### License
 
@@ -104,4 +104,3 @@ This project is open source project - feel free to contribute! Thank you.
 - [Phoca on YouTube](https://www.youtube.com/user/phocavideos)
 - [Phoca on GitHub](https://github.com/PhocaCz)
 - [Phoca on Reddit](https://www.reddit.com/user/PhocaCz)
-

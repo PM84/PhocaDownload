@@ -492,7 +492,7 @@ class PhocaDownloadFileUpload
 
 		$enable_xss_check = $paramsC->get( 'enable_xss_check', 1);
 
-		if ($frontEnd == 1) {
+		if ((int)$frontEnd > 0) {
 			$aft = $paramsC->get( 'allowed_file_types_upload', PhocaDownloadSettings::getDefaultAllowedMimeTypesUpload() );
 			$dft = $paramsC->get( 'disallowed_file_types_upload', '' );
 			$allowedMimeType 	= PhocaDownloadFile::getMimeTypeString($aft);
