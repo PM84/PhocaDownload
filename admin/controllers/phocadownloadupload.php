@@ -97,8 +97,7 @@ class PhocaDownloadCpControllerPhocaDownloadUpload extends PhocaDownloadCpContro
 					break;
 				}
 				if (isset($folder)) {
-					$data = "<html>\n<body bgcolor=\"#FFFFFF\">\n</body>\n</html>";
-					File::write($folder.'/'."index.html", $data);
+					PhocaDownloadFile::hardenFolder($folder);
 				} else {
 				    $app->enqueueMessage(Text::_("COM_PHOCADOWNLOAD_ERROR_FOLDER_CREATING"), 'error');
 					$app->redirect($link);

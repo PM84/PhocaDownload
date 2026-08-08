@@ -318,8 +318,7 @@ class PhocaDownloadModelUser extends BaseDatabaseModel
 
 					// Saving file name into database with relative path
 					if (!PhocaDownloadFile::exists($filepathUserFolder . '/' ."index.html")) {
-						$data = "<html>\n<body bgcolor=\"#FFFFFF\">\n</body>\n</html>";
-						File::write($filepathUserFolder . '/' ."index.html", $data);
+						PhocaDownloadFile::hardenFolder($filepathUserFolder);
 					}
 					$file['namepap']	= $file['name'];
 					$file['name']		=  'userupload/'.$userFolder.'/' . $file['name'];
@@ -361,8 +360,7 @@ class PhocaDownloadModelUser extends BaseDatabaseModel
 							} else {
 								if (!PhocaDownloadFile::folderExists($filepathUserFolderPAP)) {
 									if (Folder::create($filepathUserFolderPAP)) {
-										$data = "<html>\n<body bgcolor=\"#FFFFFF\">\n</body>\n</html>";
-										File::write($filepathUserFolderPAP . '/' ."index.html", $data);
+										PhocaDownloadFile::hardenFolder($filepathUserFolderPAP);
 									}
 									// else {
 										//$errUploadMsg = JText::_("COM_PHOCADOWNLOAD_UNABLE_TO_CREATE_FOLDER");

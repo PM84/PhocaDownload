@@ -14,6 +14,8 @@
 
 // no direct access
 defined('_JEXEC') or die('Restricted access');
+
+use Joomla\CMS\Component\ComponentHelper;
 use Joomla\CMS\Factory;
 use Joomla\CMS\Menu\AbstractMenu;
 use Joomla\CMS\Session\Session;
@@ -50,7 +52,7 @@ class PhocaDownloadRoute
 		return $link;
 	}
 
-	public static function getCategoryRoute($catid, $catidAlias = '') {
+	public static function getCategoryRoute($catid, $catidAlias = '', string $lang = '') {
 
 		$needles = array(
 			'category' => (int)$catid,
@@ -64,7 +66,7 @@ class PhocaDownloadRoute
 		//Create the link
 		$link = 'index.php?option=com_phocadownload&view=category&id='. $catid;
 
-		if($item = self::_findItem($needles)) {
+		if($item = self::_findItem($needles, 0, [$lang])) {
 			if(isset($item->query['layout'])) {
 				$link .= '&layout='.$item->query['layout'];
 			}
@@ -118,7 +120,7 @@ class PhocaDownloadRoute
 	}
 
 
-	public static function getFileRoute($id, $catid = 0, $idAlias = '', $catidAlias = '', $sectionid = 0, $type = 'file', $suffix = '')
+	public static function getFileRoute($id, $catid = 0, $idAlias = '', $catidAlias = '', $sectionid = 0, $type = 'file', $suffix = '', string $lang = '')
 	{
 
 		$needles = array(
@@ -154,7 +156,7 @@ class PhocaDownloadRoute
 
 		}
 
-		if ($item = self::_findItem($needles)) {
+		if ($item = self::_findItem($needles, 0, [$lang])) {
 			if (isset($item->id) && ((int)$item->id > 0)) {
 				$link .= '&Itemid='.$item->id;
 			}
@@ -228,9 +230,10 @@ class PhocaDownloadRoute
 			'guestbook' => (int) $id
 		);
 
-		$link = 'index.php?option=com_phocaguestbook&view=guestbook&cid='.(int)$id.'&reporttitle='.strip_tags($title).'&tmpl=component';
+		//$link = 'index.php?option=com_phocaguestbook&view=guestbook&cid='.(int)$id.'&reporttitle='.strip_tags($title).'&tmpl=component';
+		$link = 'index.php?option=com_phocaguestbook&view=guestbook&cid='.(int)$id.'&reporttitle='.htmlspecialchars(urlencode(strip_tags($title)), ENT_QUOTES, 'UTF-8').'&tmpl=component';
 
-		if($item = self::_findItem($needles, 1, 'com_phocaguestbook')) {
+		if($item = self::_findItem($needles, 1, [], 'com_phocaguestbook')) {
 			if (isset($item->id)) {
 				$link .= '&Itemid='.$item->id;
 			}
@@ -284,16 +287,34 @@ class PhocaDownloadRoute
 		return $link;
 	}*/
 
-	protected static function _findItem($needles, $notCheckId = 0, $component = 'com_phocadownload')
+	protected static function _findItem($needles, $notCheckId = 0, $lang = [],  $component = 'com_phocadownload')
 	{
 
 		$app		= Factory::getApplication();
 		//$menus		= $app->getMenu('site', array()); // Problems in indexer
 		$menus    = AbstractMenu::getInstance('site');
-		$items		= $menus->getItems('component', $component);
+		$componentHelper = ComponentHelper::getComponent($component);
 		//$menu 		= $menus;//$app->getMenu();
 		$active 	= $menus->getActive();
 		$option		= $app->getInput()->get( 'option', '', 'string' );
+
+		$attributes = ['component_id'];
+		$values = [$componentHelper->id];
+
+		$items		= $menus->getItems($attributes, $values);
+		$itemsLang = [];
+		if (!empty($lang)) {
+			$attributes[] 	= 'language';
+			$values[]     	= $lang;
+
+			// If multilanguage feature enabled and specific lang set then set menu item of such language
+			$itemsLang = $menus->getItems($attributes, $values);
+
+			// If no language items try to find items of current lang and if not found set the current Itemid
+			if ($itemsLang) {
+				$items = $itemsLang;
+			}
+		}
 
 		// Don't check ID for specific views. e.g. categories view does not have ID
 		$notCheckIdArray =  array('categories');

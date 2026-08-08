@@ -442,5 +442,38 @@ class PhocaDownloadFile
 	public static function folderExists($path) {
         return is_dir(Path::clean($path));
     }
+
+	/**
+	 * Harden an upload folder by writing an index.html and (optionally)
+	 * .htaccess / web.config to prevent direct script execution.
+	 *
+	 * @param   string  $path  Absolute path to the folder
+	 *
+	 * @return  bool
+	 */
+	public static function hardenFolder($path) {
+
+		$paramsC      = ComponentHelper::getParams('com_phocadownload');
+		$hardenFolder = (bool) $paramsC->get('harden_folder', 1);
+
+		$data = "<html>\n<body bgcolor=\"#FFFFFF\">\n</body>\n</html>";
+		File::write($path . '/index.html', $data);
+
+		if ($hardenFolder) {
+			// Prevent script execution in upload directories
+			$htaccess  = "<FilesMatch \"\\.(?:php[0-9]?|phtml|shtml|cgi|pl|py|jsp|asp|aspx|sh)$\">\n";
+			$htaccess .= "  <IfModule mod_authz_core.c>\n    Require all denied\n  </IfModule>\n";
+			$htaccess .= "</FilesMatch>\n";
+			$htaccess .= "RemoveHandler .php .phtml .php3 .php4 .php5 .shtml\n";
+			$htaccess .= "RemoveType .php .phtml .php3 .php4 .php5 .shtml\n";
+
+			$webconfig = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<configuration>\n  <system.webServer>\n    <security>\n      <requestFiltering>\n        <fileExtensions>\n          <add fileExtension=\".php\" allowed=\"false\" />\n          <add fileExtension=\".shtml\" allowed=\"false\" />\n        </fileExtensions>\n      </requestFiltering>\n    </security>\n  </system.webServer>\n</configuration>";
+
+			File::write($path . '/.htaccess', $htaccess);
+			File::write($path . '/web.config', $webconfig);
+		}
+
+		return true;
+	}
 }
 ?>
