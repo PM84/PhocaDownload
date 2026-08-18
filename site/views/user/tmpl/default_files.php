@@ -57,7 +57,7 @@ if ($this->t['catidfiles'] == 0 || $this->t['catidfiles'] == '') {
 	<div class="col-sm-12 col-md-4">
 		<div class="input-group">
 			<?php /*<label for="filter_search" class="element-invisible"><?php echo JText::_( 'COM_PHOCADOWNLOAD_FILTER' ); ?></label> */ ?>
-			<input type="text" name="search" id="pdsearch" placeholder="<?php echo Text::_( 'COM_PHOCADOWNLOAD_SEARCH' ); ?>" value="<?php echo $this->t['listsfiles']['search'];?>" title="<?php echo Text::_( 'COM_PHOCADOWNLOAD_SEARCH' ); ?>" class="form-control" />
+			<input type="text" name="search" id="pdsearch" placeholder="<?php echo Text::_( 'COM_PHOCADOWNLOAD_SEARCH' ); ?>" value="<?php echo htmlspecialchars($this->t['listsfiles']['search'], ENT_QUOTES, 'UTF-8');?>" title="<?php echo Text::_( 'COM_PHOCADOWNLOAD_SEARCH' ); ?>" class="form-control" />
 
 			<span class="input-group-btn">
 			<button class="btn btn-primary tip hasTooltip" type="submit" onclick="this.form.submit();"  title="<?php echo Text::_( 'COM_PHOCADOWNLOAD_SEARCH' ); ?>"><span class="icon-fw icon-search"></span></button>
